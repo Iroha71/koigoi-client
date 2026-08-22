@@ -1,0 +1,31 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "python -c \"import sys,json; d=json.load(sys.stdin); f=(d.get('tool_input') or {}).get('file_path') or ''; open('.claude/.pending-check','w').close() if f.lower().endswith('.kt') else None\"",
+            "timeout": 15,
+            "statusMessage": "変更ファイルを確認中..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "python -c \"import os,subprocess,json; p='.claude/.pending-check'; e=os.path.exists(p); os.remove(p) if e else None; ok = (subprocess.run(r'.\\gradlew.bat lint && .\\gradlew.bat assembleDebug', shell=True).returncode==0) if e else True; print(json.dumps({'systemMessage': ('lint / assembleDebug: OK' if ok else 'lint or assembleDebug failed. See terminal output above.')})) if e else None\"",
+            "timeout": 300,
+            "statusMessage": "lint と assembleDebug を実行中..."
+          }
+        ]
+      }
+    ]
+  }
+}

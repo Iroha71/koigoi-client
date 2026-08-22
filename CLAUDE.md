@@ -40,9 +40,10 @@ Windows 環境のため `gradlew.bat` を使用する(PowerShell)。
   - 起動時に `SecureCredentialsManager` から保存済み認証情報の復元を試みる。
   - `login()` / `logout()` は Auth0 の `WebAuthProvider` を呼び出し、結果を `MainActivity` の state に反映する。
   - これらの state とコールバック(`onLogin`, `onLogout`)を `AppNavHost` に渡すだけで、画面側は Auth0 の API を直接触らない。
-- `navigation/AppNavHost.kt` が `credentials` の有無を見て `Landing` ⇔ `Home` を自動的に切り替える(`LaunchedEffect(credentials)` で `popUpTo` しながら遷移)。
-  - ルートは `navigation/Routes.kt` の `@Serializable object`(型安全ナビゲーション)で定義する。新しい画面を追加する場合はここにルートを足し、`AppNavHost` の `NavHost` ブロックに `composable<...>` を追加する。
-- `views/` 配下が画面(Landing, Home など)。画面は state を持たず、必要な値とコールバックを引数で受け取る設計になっている。
+- `navigation/AppNavHost.kt` が `credentials` の有無を見て `Landing` ⇔ `Home` を自動的に切り替える(`LaunchedEffect(credentials)` で `popUpTo` しながら遷移)。ルートは `navigation/Routes.kt` の `@Serializable object`(型安全ナビゲーション)で定義する。
+- `views/` 配下が画面(Landing, Home など)。
+
+画面の追加・変更時の規約は `.claude/rules/navigation-screens.md` を参照。
 
 ### Auth0 設定
 
@@ -52,5 +53,5 @@ Windows 環境のため `gradlew.bat` を使用する(PowerShell)。
 ### UI
 
 - Material3 + Compose。テーマは `ui/theme/`(Color.kt, Theme.kt, Type.kt)にまとまっている。
-- `material-icons-core`(`androidx.compose.material:material-icons-core`)は依存に追加せず利用しない方針。
-  アイコンが必要な箇所(例: BottomTab)はラベルのみで表現する。
+
+アイコンの扱いに関する規約は `.claude/rules/ui-icons.md` を参照。

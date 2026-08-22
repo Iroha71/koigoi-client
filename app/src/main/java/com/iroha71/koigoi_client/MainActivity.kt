@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.auth0.android.Auth0
+import com.auth0.android.authentication.AuthenticationAPIClient
 import com.auth0.android.authentication.AuthenticationException
 import com.auth0.android.authentication.storage.CredentialsManagerException
 import com.auth0.android.authentication.storage.SecureCredentialsManager
@@ -35,7 +36,7 @@ class MainActivity : ComponentActivity() {
         )
     }
     private val manager: SecureCredentialsManager by lazy {
-        SecureCredentialsManager(this, account, SharedPreferencesStorage(this))
+        SecureCredentialsManager(AuthenticationAPIClient(account), this, SharedPreferencesStorage(this))
     }
 
     private var credentials by mutableStateOf<Credentials?>(null)
