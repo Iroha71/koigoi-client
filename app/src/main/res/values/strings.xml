@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">koigoi-client</string>
+    <string name="com_auth0_scheme">https</string>
+</resources>
